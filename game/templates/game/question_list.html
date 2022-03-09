@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters crispy_forms_tags %}
+{% block jumbotron %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Questions List</h1>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row my-3">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <caption>Questions list</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Question</th>
+                        <th scope="col">Point</th>
+                        <th scope="col">Number of Answers</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for question in questions %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ question.question }}</td>
+                            <td>{{ question.point }}</td>
+                            <td>{{ question.answers.count }}</td>
+                            <td>
+                                <a href="{% url 'game:question_update' question.id %}"
+                                   class="btn btn-outline-primary btn-sm d-inline-block mb-1">
+                                    edit
+                                </a>
+                                <a href="{% url 'game:answer_list' question.id %}"
+                                   class="btn btn-outline-warning btn-sm d-inline-block mb-1">
+                                    answers
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <a href="{% url 'game:question_create' %}"
+               class="btn btn-lg btn-primary d-inline-block">Add question</a>
+        </div>
+    </div>
+{% endblock %}

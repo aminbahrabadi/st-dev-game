@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters crispy_forms_tags %}
+{% block jumbotron %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Games List</h1>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row my-3">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <caption>Games list</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Created at</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Finished</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for game in games %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ game.created_at|date:'d/m/Y' }}</td>
+                            <td>{{ game.score }}</td>
+                            <td>{{ game.is_finished|yesno:'Yes,No' }}</td>
+                            <td>
+                                {% if not game.is_finished %}
+                                <a href=""
+                                   class="btn btn-outline-primary btn-sm d-inline-block mb-1">
+                                    continue
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <a href="{% url 'game:game_start' %}"
+               class="btn btn-lg btn-primary d-inline-block">Start New Game</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters crispy_forms_tags %}
+{% block jumbotron %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Answers List</h1>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row my-3">
+    <div class="col-md-12">
+        <h3>Question: {{ question.question }}</h3>
+    </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <caption>Questions list</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Answer</th>
+                        <th scope="col">Right Answer</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for answer in answers %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ answer.answer }}</td>
+                            <td>{{ answer.is_right_answer|yesno:'✔,✘' }}</td>
+                            <td>
+                                <a href="{% url 'game:answer_update' answer.id %}"
+                                   class="btn btn-outline-primary btn-sm d-inline-block mb-1">
+                                    edit
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    {% empty %}
+                        <td colspan="4">No answers yet.</td>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    <div class="col-md-12">
+        <a href="{% url 'game:answer_create' question.id %}"
+           class="btn btn-lg btn-primary d-inline-block">Add answer</a>
+        <a href="{% url 'game:question_list' %}"
+           class="btn btn-lg btn-danger d-inline-block">Back</a>
+    </div>
+    </div>
+{% endblock %}

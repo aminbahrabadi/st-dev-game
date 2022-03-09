@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters crispy_forms_tags %}
+{% block jumbotron %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Game Start</h1>
+        </div>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <div class="row my-3">
+        <div class="col-md-12">
+            <h4>To start the game, click on Start button!</h4>
+        </div>
+    <div class="col-md-12 my-3">
+        <a href="{% url 'game:game_get_questions' %}"
+           class="btn btn-success btn-lg btn-block">Start</a>
+    </div>
+    </div>
+{% endblock %}
