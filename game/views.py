@@ -9,12 +9,13 @@ from django.http import HttpResponseRedirect
 import random
 
 from mixins.mixins import RoleRequiredMixin
+from accounts.constants import roles
 from .models import Question, Answer, Game, UserAnswer
 from .forms import QuestionForm, AnswerForm, GamePlayForm
 
 
 class QuestionCreateView(LoginRequiredMixin, RoleRequiredMixin, CreateView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
     template_name = 'game/question_create_update.html'
     form_class = QuestionForm
 
@@ -24,7 +25,7 @@ class QuestionCreateView(LoginRequiredMixin, RoleRequiredMixin, CreateView):
 
 
 class QuestionUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
     template_name = 'game/question_create_update.html'
     form_class = QuestionForm
 
@@ -39,7 +40,7 @@ class QuestionUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
 
 
 class QuestionDeleteView(LoginRequiredMixin, RoleRequiredMixin, DeleteView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
 
     def get_object(self, queryset=None):
         question_id = self.kwargs.get('question_id')
@@ -52,7 +53,7 @@ class QuestionDeleteView(LoginRequiredMixin, RoleRequiredMixin, DeleteView):
 
 
 class QuestionListView(LoginRequiredMixin, RoleRequiredMixin, ListView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
     template_name = 'game/question_list.html'
     context_object_name = 'questions'
 
@@ -62,7 +63,7 @@ class QuestionListView(LoginRequiredMixin, RoleRequiredMixin, ListView):
 
 
 class AnswerCreateView(LoginRequiredMixin, RoleRequiredMixin, CreateView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
     template_name = 'game/answer_create_update.html'
     form_class = AnswerForm
 
@@ -86,7 +87,7 @@ class AnswerCreateView(LoginRequiredMixin, RoleRequiredMixin, CreateView):
 
 
 class AnswerUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
     template_name = 'game/answer_create_update.html'
     form_class = AnswerForm
 
@@ -102,7 +103,7 @@ class AnswerUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
 
 
 class AnswerDeleteView(LoginRequiredMixin, RoleRequiredMixin, DeleteView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
 
     def get_object(self, queryset=None):
         answer_id = self.kwargs.get('answer_id')
@@ -116,7 +117,7 @@ class AnswerDeleteView(LoginRequiredMixin, RoleRequiredMixin, DeleteView):
 
 
 class AnswerListView(LoginRequiredMixin, RoleRequiredMixin, ListView):
-    roles_required = ['admin']
+    roles_required = [roles.get('admin')]
     template_name = 'game/answer_list.html'
     context_object_name = 'answers'
 
