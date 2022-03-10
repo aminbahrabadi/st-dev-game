@@ -29,13 +29,13 @@ class UserRegister(CreateView):
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
-    success_url = reverse_lazy('portal:dashboard_index')
+    success_url = reverse_lazy('game:game_start')
     form_class = AuthenticationForm
     redirect_field_name = REDIRECT_FIELD_NAME
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('portal:dashboard_index'))
+            return HttpResponseRedirect(reverse_lazy('game:game_start'))
 
         return super(UserLoginView, self).get(request, *args, **kwargs)
 

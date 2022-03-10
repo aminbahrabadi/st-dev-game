@@ -5,6 +5,9 @@ from . import views
 app_name = 'game'
 
 urlpatterns = [
+    # index
+    path('', views.IndexRedirectView.as_view(), name='index_redirect'),
+
     # question
     path('question/create/', views.QuestionCreateView.as_view(), name='question_create'),
     path('question/update/<int:question_id>/', views.QuestionUpdateView.as_view(),

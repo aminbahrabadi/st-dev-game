@@ -13,9 +13,41 @@
         <div class="col-md-12">
             <h4>To start the game, click on Start button!</h4>
         </div>
-    <div class="col-md-12 my-3">
-        <a href="{% url 'game:game_get_questions' %}"
-           class="btn btn-success btn-lg btn-block">Start</a>
-    </div>
+        <div class="col-md-12 my-3">
+            <a href="{% url 'game:game_get_questions' %}"
+               class="btn btn-success btn-lg btn-block">Start</a>
+        </div>
+        <div class="col-md-12 my-2">
+            <h2>Top Games</h2>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <caption>Top Games</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Created at</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Gamer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for game in top_games %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ game.created_at|date:'d/m/Y H:i' }}</td>
+                            <td>{{ game.score }}</td>
+                            {% if game.user.first_name and game.user.last_name %}
+                                <td>{{ game.user.first_name }} {{ game.user.last_name }}</td>
+                            {% else %}
+                                <td>{{ game.user.username }}</td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

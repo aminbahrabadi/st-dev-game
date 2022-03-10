@@ -109,13 +109,19 @@ class AnswerListView(LoginRequiredMixin, RoleRequiredMixin, ListView):
 class GameStartTemplateView(LoginRequiredMixin, TemplateView):
     template_name = 'game/game_start.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(GameStartTemplateView, self).get_context_data(**kwargs)
+        top_games = Game.objects.filter(is_finished=True).order_by('-score')[:10]
+        context['top_games'] = top_games
+        return context
+
 
 class GameListView(LoginRequiredMixin, ListView):
     template_name = 'game/game_list.html'
     context_object_name = 'games'
 
     def get_queryset(self):
-        qs = Game.objects.filter(user=self.request.user)
+        qs = Game.objects.filter(user=self.request.user).order_by('-created_at')
         return qs
 
 
@@ -211,3 +217,8 @@ class PlayGameView(LoginRequiredMixin, FormView):
     def get_success_url(self):
         game_id = self.kwargs.get('game_id')
         return reverse_lazy('game:game_play', kwargs={'game_id': game_id})
+
+
+class IndexRedirectView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy('game:game_start')
