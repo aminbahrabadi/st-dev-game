@@ -3,7 +3,7 @@
 You can test live demo here: [Simple Question Game](https://st-dev-game.ir)
 ### Users:
 <br />Admin:
-username: admin_user
+<br />username: admin_user
 <br />password: zewsM5UwbMNaBFc
 ## How to run
 1. Clone the project
