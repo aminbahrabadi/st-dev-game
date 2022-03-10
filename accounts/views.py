@@ -61,7 +61,8 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
         redirect_to = self.request.GET.get(self.redirect_field_name)
-        if not url_has_allowed_host_and_scheme(url=redirect_to, allowed_hosts=self.request.get_host()):
+        if not url_has_allowed_host_and_scheme(url=redirect_to,
+                                               allowed_hosts=self.request.get_host()):
             redirect_to = self.success_url
         messages.success(self.request, 'Welcome {}!'.format(self.request.user.username))
         return redirect_to
