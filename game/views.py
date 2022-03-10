@@ -206,7 +206,7 @@ class PlayGameView(LoginRequiredMixin, FormView):
     def get_question(self):
         # get the current question
         game_id = self.kwargs.get('game_id')
-        game = get_object_or_404(Game, id=game_id, user_id=self.request.user)
+        game = get_object_or_404(Game, id=game_id, user_id=self.request.user.id)
         question = UserAnswer.objects.filter(game_id=game.id, answer__isnull=True)
         if question.exists():
             question = question.first().question
