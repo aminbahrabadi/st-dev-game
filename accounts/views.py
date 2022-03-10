@@ -24,7 +24,7 @@ class UserRegister(CreateView):
     form_class = RegisterForm
 
     def get_success_url(self):
-        return reverse_lazy('game:question_list')
+        return reverse_lazy('game:game_start')
 
 
 class UserLoginView(LoginView):
