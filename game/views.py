@@ -1,5 +1,5 @@
 from django.views.generic import (CreateView, ListView, UpdateView, TemplateView,
-                                  RedirectView, FormView)
+                                  RedirectView, FormView, DeleteView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -35,6 +35,19 @@ class QuestionUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
 
     def get_success_url(self):
         messages.success(self.request, 'Question is successfully updated.')
+        return reverse_lazy('game:question_list')
+
+
+class QuestionDeleteView(LoginRequiredMixin, RoleRequiredMixin, DeleteView):
+    roles_required = ['admin']
+
+    def get_object(self, queryset=None):
+        question_id = self.kwargs.get('question_id')
+        question = get_object_or_404(Question, id=question_id)
+        return question
+
+    def get_success_url(self):
+        messages.success(self.request, 'Question is successfully deleted.')
         return reverse_lazy('game:question_list')
 
 
@@ -85,6 +98,20 @@ class AnswerUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     def get_success_url(self):
         question_id = self.object.question_id
         messages.success(self.request, 'Answer is successfully updated.')
+        return reverse_lazy('game:answer_list', kwargs={'question_id': question_id})
+
+
+class AnswerDeleteView(LoginRequiredMixin, RoleRequiredMixin, DeleteView):
+    roles_required = ['admin']
+
+    def get_object(self, queryset=None):
+        answer_id = self.kwargs.get('answer_id')
+        answer = get_object_or_404(Answer, id=answer_id)
+        return answer
+
+    def get_success_url(self):
+        question_id = self.object.question_id
+        messages.success(self.request, 'Answer is successfully deleted.')
         return reverse_lazy('game:answer_list', kwargs={'question_id': question_id})
 
 

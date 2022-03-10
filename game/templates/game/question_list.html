@@ -40,6 +40,15 @@
                                    class="btn btn-outline-warning btn-sm d-inline-block mb-1">
                                     answers
                                 </a>
+                                <form method="post" class="d-inline-block"
+                                      action="{% url 'game:question_delete' question.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                       class="btn btn-outline-danger btn-sm d-inline-block mb-1">
+                                        delete
+                                    </button>
+                                </form>
+
                             </td>
                         </tr>
                     {% endfor %}

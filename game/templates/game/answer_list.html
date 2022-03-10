@@ -37,6 +37,14 @@
                                    class="btn btn-outline-primary btn-sm d-inline-block mb-1">
                                     edit
                                 </a>
+                                <form method="post" class="d-inline-block"
+                                      action="{% url 'game:answer_delete' answer.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="btn btn-outline-danger btn-sm d-inline-block mb-1">
+                                        delete
+                                    </button>
+                                </form>
 
                             </td>
 
