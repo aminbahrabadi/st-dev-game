@@ -193,7 +193,7 @@ class PlayGameView(LoginRequiredMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         # if the game is over, redirect to results
         game_id = self.kwargs.get('game_id')
-        game = get_object_or_404(Game, id=game_id, user_id=self.request.user)
+        game = get_object_or_404(Game, id=game_id, user_id=self.request.user.id)
         questions = UserAnswer.objects.filter(game_id=game.id, answer__isnull=True)
         if not questions.exists():
             game.is_finished = True
