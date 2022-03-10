@@ -4,7 +4,7 @@ You can test live demo here: [Simple Question Game](https://st-dev-game.ir)
 ### Users:
 <br />Admin:
 username: admin_user
-password: zewsM5UwbMNaBFc
+<br />password: zewsM5UwbMNaBFc
 ## How to run
 1. Clone the project
 2. Open terminal and create a virtual environment:
