@@ -127,8 +127,10 @@ class GameListView(LoginRequiredMixin, ListView):
 
 class GameCreateRedirectView(LoginRequiredMixin, RedirectView):
     def get(self, request, *args, **kwargs):
-        questions_list = list(Question.objects.all().values_list('id', flat=True))
+        questions_list = list(Question.objects.filter(
+            answers__isnull=False).distinct().values_list('id', flat=True))
 
+        # check we have enough questions
         if len(questions_list) < 5:
             messages.error(self.request, 'There are not enough questions in our database!')
             return HttpResponseRedirect(reverse_lazy('game:game_start'))
@@ -140,8 +142,10 @@ class GameCreateRedirectView(LoginRequiredMixin, RedirectView):
 
         self.game_id = game.id
 
+        # select random 5 questions
         selected_questions = random.sample(questions_list, 5)
 
+        # create user_answer objects
         for question in selected_questions:
             UserAnswer.objects.create(
                 game_id=game.id,
@@ -159,6 +163,7 @@ class PlayGameView(LoginRequiredMixin, FormView):
     form_class = GamePlayForm
 
     def dispatch(self, request, *args, **kwargs):
+        # if the game is over, redirect to results
         game_id = self.kwargs.get('game_id')
         game = get_object_or_404(Game, id=game_id, user_id=self.request.user)
         questions = UserAnswer.objects.filter(game_id=game.id, answer__isnull=True)
@@ -171,6 +176,7 @@ class PlayGameView(LoginRequiredMixin, FormView):
         return super(PlayGameView, self).dispatch(request, *args, **kwargs)
 
     def get_question(self):
+        # get the current question
         game_id = self.kwargs.get('game_id')
         game = get_object_or_404(Game, id=game_id, user_id=self.request.user)
         question = UserAnswer.objects.filter(game_id=game.id, answer__isnull=True)
@@ -196,7 +202,8 @@ class PlayGameView(LoginRequiredMixin, FormView):
         question_id = self.get_question()
         question = get_object_or_404(Question, id=question_id)
         answer = form.cleaned_data.get('answer')
-        user_answer = UserAnswer.objects.filter(game_id=game.id, answer__isnull=True)
+        user_answer = UserAnswer.objects.filter(game_id=game.id,
+                                                question_id=question.id)
         if user_answer.exists():
             user_answer = user_answer.first()
             user_answer.answer = answer
