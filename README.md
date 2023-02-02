@@ -22,11 +22,11 @@ pip install -r requirements.txt
 - Migrate and create database:
 ```sh
 python manage.py migrate
-- ```
+```
 - Run server:
 ```sh
 python manage.py runserver
-- ```
+```
 - Open the browser and browse this URL:
 ```sh
 127.0.0.1:8000
