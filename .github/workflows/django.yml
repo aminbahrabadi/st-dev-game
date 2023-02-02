@@ -26,6 +26,16 @@ jobs:
         source venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Make envfile
+      run: |
+        touch question_game/.env
+        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> question_game/.env
+        echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> question_game/.env
+        echo DATABASE_USER=${{ secrets.DATABASE_USER }} >> question_game/.env
+        echo DATABASE_PASS=${{ secrets.DATABASE_PASS }} >> question_game/.env
+        echo DEBUG=${{ secrets.DEBUG }} >> question_game/.env
+        echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> question_game/.env
+        cat question_game/.env
     - name: Migrate changes
       run: |
         source venv/bin/activate
