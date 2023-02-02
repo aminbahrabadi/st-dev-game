@@ -1,0 +1,23 @@
+name: Create envfile
+
+on: [ push ]
+
+jobs:
+
+  create-envfile:
+
+    runs-on: self-hosted
+
+    steps:
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        envkey_DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+        envkey_DATABASE_USER: ${{ secrets.DATABASE_USER }}
+        envkey_DATABASE_PASS: ${{ secrets.DATABASE_PASS }}
+        envkey_DEBUG: ${{ secrets.DEBUG }}
+        envkey_ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        directory: ../../question_game/
+        file_name: .env
+        fail_on_empty: false
