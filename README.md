@@ -3,10 +3,12 @@
 You can test live demo here: [Simple Question Game](https://st-dev.pytsts.ir)
 ### Users:
 <br />Admin:
-<br />username: admin_user
-<br />password: zewsM5UwbMNaBFc
+<br />username: game_admin
+<br />password: bkfijSWqz44YDV2
 ## How to run
+- Create a Postgresql database
 - Clone the project
+- Update .env file based on your credentials
 - Open terminal and create a virtual environment:
 ```sh
 virtualenv venv
